@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  overflow-x: hidden;
+  scrollbar-gutter: stable both-edges;
+}
+
+/* In your global stylesheet or a dedicated component stylesheet */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-pulse {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  html {
+    width: 70%;
+    margin: auto;
+  }
+}
+
+/* Universal scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.1);
+}
+
+
+/* Hide scrollbar for the NewUpdate component */
+.new-update-scroll-container {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.new-update-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+
+:root {
+  --tw-text-opacity: 1;
+  --color-start: rgb(15 23 42 / var(--tw-text-opacity));
+  --color-end: rgb(30 41 59 / var(--tw-text-opacity));
+}
+
+html {
+  background: linear-gradient(to right, var(--color-start), var(--color-end));
+  height: 100%;
+  margin: 0;
+}
+
+.line-clamp-2 {
+  @apply overflow-hidden text-ellipsis; /* Tailwind classes */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
