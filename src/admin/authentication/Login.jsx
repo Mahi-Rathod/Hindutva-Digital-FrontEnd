@@ -43,7 +43,9 @@ function Login() {
   }, []);
 
   const handleLogin = async () => {
+    console.log(formData);
     const res = await axiosInstance.post('/sign-in-using-password', formData);
+    console.log(res);
     const { user } = await res.data;
     if (user.role === 'admin') {
       dispatch(loginSuccess({ payload: user }));
