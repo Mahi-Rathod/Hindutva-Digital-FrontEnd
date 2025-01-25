@@ -3,14 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginSuccess } from '../../redux/slices/authSlice';
 import axios from 'axios';
-import { FcGoogle } from "react-icons/fc";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 function Login() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
 
-  const [isUsernameFocused, setIsUsernameFocused] = useState(false);
-  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [formData, setFormData] = useState({
     userIdentifier: '',
     password: ''
@@ -42,7 +39,8 @@ function Login() {
     fetchUser();
   }, []);
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     console.log(formData);
     const res = await axiosInstance.post('/sign-in-using-password', formData);
     console.log(res);
