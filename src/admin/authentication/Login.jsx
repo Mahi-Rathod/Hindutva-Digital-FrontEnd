@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { loginSuccess } from '../../redux/slices/authSlice';
+import { loginSuccess, loginFailure } from '../../redux/slices/authSlice';
 import axios from 'axios';
 import { FaEnvelope, FaLock } from "react-icons/fa";
-function Login() {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const dispatch = useDispatch();
+import WifiLoader from "../../component/utils/wifiLoader/WifiLoader.jsx";
 
+function Login() {
+  const { isAuthenticated, isAdmin, error } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     userIdentifier: '',
     password: ''
@@ -28,31 +30,47 @@ function Login() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axiosInstance.get('/get-user');
-      const { user } = await res.data;
+      try {
+        const res = await axiosInstance.get('/get-user');
+        const { user } = await res.data;
 
+        if (user.role === 'admin') {
+          dispatch(loginSuccess({ payload: user }));
+          navigate("/admin", { replace: true });
+        }
+      } catch (error) {
+        console.log(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      setIsLoading(true);
+      const res = await axiosInstance.post('/sign-in-using-password', formData);
+      const { user } = await res.data;
       if (user.role === 'admin') {
         dispatch(loginSuccess({ payload: user }));
         navigate("/admin", { replace: true });
       }
+    } catch (error) {
+      console.log(error.message);
+      dispatch(loginFailure({payload : error.message}));
     }
-    fetchUser();
-  }, []);
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    console.log(formData);
-    const res = await axiosInstance.post('/sign-in-using-password', formData);
-    console.log(res);
-    const { user } = await res.data;
-    if (user.role === 'admin') {
-      dispatch(loginSuccess({ payload: user }));
-      navigate("/admin", { replace: true });
+    finally{
+      setIsLoading(false);
     }
   }
 
   return (
     <>
+
       {
         !isAuthenticated &&
         <div className="flex min-h-screen items-center justify-center bg-gray-900">
@@ -96,9 +114,20 @@ function Login() {
                   />
                 </div>
               </div>
-              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
-                Login
-              </button>
+              {
+                isLoading == false ? (
+                  <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
+                    Login
+                  </button>
+                ) : (
+                  <div className='w-full flex justify-center items-center px-4 py2'>
+                    <WifiLoader />
+                  </div>
+                )
+              }
+              {
+                error && <p className='text-red-500'>error</p>
+              }
             </form>
           </div>
         </div>
