@@ -20,7 +20,7 @@ function NewsCard({
     return (
         <div
             // className='relative h-[25rem] md:h-[26rem] bg-white w-[100%] md:px-0 md:w-[20rem] rounded-lg shadow-md shadow-slate-400 cursor-pointer'
-            className={`${isLight ? " bg-slate-900 shadow-slate-700" : "bg-slate-700"}
+            className={`${isLight ? " bg-slate-900 shadow-slate-700" : "bg-slate-700"} m-auto
                         relative md:px-0 ${heights} ${width} rounded-md shadow-sm  cursor-pointer hover:shadow-[0px_0px_9px_0.8px_rgb(240,255,240,0.3)] hover:bg-slate-800`}
         >
 

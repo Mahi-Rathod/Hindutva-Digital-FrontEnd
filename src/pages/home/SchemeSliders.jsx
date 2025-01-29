@@ -80,7 +80,7 @@ function SchemeSliders({ posts, link }) {
                                 date={post.createdAt}
                                 link={`${link}/post/${post.id}`}
                                 heights='h-[17rem] md:h-[24rem]'
-                                width='w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%]'
+                                width='w-[80%] md:w-full'
                                 imgHeight='h-[7.5rem] md:h-[12rem]'
                             />
                         </div>
