@@ -5,8 +5,8 @@ import { BsTwitterX } from "react-icons/bs";
 import { IoTrendingUpOutline } from "react-icons/io5";
 import Instagram from './../../assets/Social-Media/Instagram.png'
 import Youtube from './../../assets/Social-Media/Youtube.png'
+import xtweeter from './../../assets/Social-Media/x_Black.png';
 import Whatsapp from './../../assets/Social-Media/Whatsapp.png'
-import xtweeter from './../../assets/Social-Media/x_black.png'
 import x_white from './../../assets/Social-Media/x.png'
 import Button from '../../component/utils/Button/Button.jsx';
 import SchemeSliders from './SchemeSliders';
