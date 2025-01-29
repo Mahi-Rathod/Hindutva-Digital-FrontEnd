@@ -45,21 +45,23 @@ function Navbar() {
             className={`sticky m-auto max-w-[1488px] border-solid border-b-[1px] p-2 w-full flex md:justify-between items-center z-50 top-0
                 ${isLight ? "bg-white border-gray-500 text-slate-900" : "bg-gradient-to-r from-slate-900 bg-slate-800 border-slate-700 text-white "}`}
         >
-            <div className="h-11 flex flex-row gap-[4rem] items-center cursor-pointer w-[40%]">
-                <div className="flex flex-row gap-2 items-center cursor-pointer">
-                    {/* <img
+            <NavLink to="/home">
+                <div className="h-11 flex flex-row gap-[4rem] items-center cursor-pointer w-[40%]">
+                    <div className="flex flex-row gap-2 items-center cursor-pointer">
+                        {/* <img
                         src={logo}
                         alt="Logo"
                         className="h-10 shadow-sm shadow-red-400 p-1 rounded-sm"
                     /> */}
-                    <div className="p-1">
-                        <h2 className="text-[1.4rem] font-extrabold"> हिंदुत्व </h2>
-                        <h3 className="text-orange-500 text-[0.8rem] font-extrabold font-serif">
-                            Digital's
-                        </h3>
+                        <div className="p-1">
+                            <h2 className="text-[1.4rem] font-extrabold"> हिंदुत्व </h2>
+                            <h3 className="text-orange-500 text-[0.8rem] font-extrabold font-serif">
+                                Digital's
+                            </h3>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </NavLink>
 
             {
                 !isAdmin ? (
@@ -110,7 +112,7 @@ function Navbar() {
                     (
                         <div className='w-full items-center justify-end flex'>
                             <div className='hidden md:flex w-[70%] items-center justify-center'>
-                                <SearchBar isLight = { isLight }/>
+                                <SearchBar isLight={isLight} />
                             </div>
                             <div className="flex items-center space-x-4">
                                 <ThemeChange />
