@@ -4,16 +4,12 @@ import { NavLink } from 'react-router-dom';
 import Menu from './Menu';
 import SearchBar from '../utils/SearchBar/SearchBar.jsx';
 import ThemeChange from '../utils/ThemeChange/ThemeChange.jsx';
-import useGsap from '../utils/hook/useGsap.jsx';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useSelector } from 'react-redux';
 import { RiArrowDropDownLine } from "react-icons/ri";
 import adminProfile from "../../assets/adminprofile.png";
 
-gsap.registerPlugin(ScrollTrigger);
 
-function Navbar({ onAnimationComplete }) {
+function Navbar() {
     const [isMenu, setIsMenu] = useState(false);
     const { isAdmin, name } = useSelector((state) => state.auth);
     const { isLight } = useSelector((state) => state.theme);
@@ -24,19 +20,6 @@ function Navbar({ onAnimationComplete }) {
     const toggleMenu = () => {
         setIsMenu(!isMenu);
     };
-
-    useGsap(() => {
-        gsap.from("header", {
-            opacity: 0,
-            y: -20,
-            duration: 0.1,
-            stagger: 0.2,
-            ease: "power3.out",
-            onComplete: () => {
-                if (onAnimationComplete) onAnimationComplete();
-            },
-        });
-    }, [onAnimationComplete]);
 
     const renderNavLink = (to, label) => (
         <span className='p-3' onClick={() => handleCategory(label)}>
@@ -59,7 +42,7 @@ function Navbar({ onAnimationComplete }) {
     }
     return (
         <header
-            className={`fixed border-solid border-b-[1px] p-2 px-5 w-full flex md:justify-between items-center z-50 top-0
+            className={`sticky m-auto max-w-[1488px] border-solid border-b-[1px] p-2 w-full flex md:justify-between items-center z-50 top-0
                 ${isLight ? "bg-white border-gray-500 text-slate-900" : "bg-gradient-to-r from-slate-900 bg-slate-800 border-slate-700 text-white "}`}
         >
             <div className="h-11 flex flex-row gap-[4rem] items-center cursor-pointer w-[40%]">
@@ -127,11 +110,11 @@ function Navbar({ onAnimationComplete }) {
                     (
                         <div className='w-full items-center justify-end flex'>
                             <div className='hidden md:flex w-[70%] items-center justify-center'>
-                                <SearchBar />
+                                <SearchBar isLight = { isLight }/>
                             </div>
                             <div className="flex items-center space-x-4">
                                 <ThemeChange />
-                                <button className="text-gray-600 text-2xl">🔔</button>
+                                <button className="text-2xl">🔔</button>
                                 <div className="flex items-center space-x-2">
                                     <img
                                         src={adminProfile}

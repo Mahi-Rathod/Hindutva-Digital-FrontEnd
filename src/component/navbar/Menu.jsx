@@ -38,7 +38,7 @@ function Menu({ isVisible, toggleMenu }) {
                     fixed z-10 right-0 top-[3.7rem]
                     border-solid
                     ${isLight ? "bg-white" : "bg-gradient-to-r from-slate-900 bg-slate-800"}
-                    h-[100] w-full
+                    h-[100] w-full sm:hidden
                     overflow-hidden transition-transform duration-300 ease-in transform
                     ${isVisible ? '-translate-x-0' : 'translate-x-full'}
                 `}

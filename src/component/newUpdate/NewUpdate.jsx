@@ -40,8 +40,8 @@ function NewUpdate() {
         New Update
       </div>
       <div
-        className="new-update-scroll-container w-full overflow-hidden"
-        style={{ maxHeight: '450px', overflowY: 'auto' }} // Ensure scrolling functionality
+        className="new-update-scroll-container w-full overflow-hidden h-full max-h-full"
+        style={{ overflowY: 'auto' }} // Ensure scrolling functionality
         ref={scrollContainer}
       >
         {newPosts.map((post) => (

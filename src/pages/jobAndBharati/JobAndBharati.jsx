@@ -12,7 +12,7 @@ function JobAndBharati() {
         {!isNestedRoute && <SideSection category="Job-Bharati" setPage={setPage} page={page} />}
         <Outlet />
       </section>
-      <div className='fixed w-[30%] right-4'>
+      <div className="fixed w-[30%] right-4 hidden sm:block">
         <NewUpdate />
       </div>
     </div>

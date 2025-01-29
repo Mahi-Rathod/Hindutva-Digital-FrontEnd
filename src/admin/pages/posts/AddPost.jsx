@@ -4,14 +4,12 @@ import { IoCloudUpload } from "react-icons/io5";
 import { IoMdCloudDone } from "react-icons/io";
 import "react-datepicker/dist/react-datepicker.css";
 import JoditEditor from 'jodit-react';
+import axiosInstance from "../../../component/utils/axiosInstance/AxiosInstance.jsx";
+import { toast } from "react-toastify";
+import Loader from "../../../component/loader/Loader.jsx";
 import axios from "axios";
 
-const axiosInstance = axios.create({
-  baseURL: `${import.meta.env.VITE_API_BASE_URL}`,
-  withCredentials: true
-});
-
-const AddPost = ({ handleAddPostVisibility }) => {
+const AddPost = ({ handleAddPostVisibility, isLight }) => {
   const [uploading, setUploading] = useState({
     status: "Pending"
   });
@@ -27,21 +25,21 @@ const AddPost = ({ handleAddPostVisibility }) => {
     fileType: '',
     S3Key: ''
   });
-
+  const [isLoading, setIsLoading] = useState(false);
   const editor = useRef(null);
   const [content, setContent] = useState('');
 
-
-
   const onSubmit = async (data) => {
     try {
+      setIsLoading(true);
       if (thumbnail.fileName && thumbnail.fileType && thumbnail.S3Key) data.thumbnailData = thumbnail;
       data.content = content;
-      console.log(data);
       const res = await axiosInstance.post("/posts/add-post", data);
       console.log(res.data);
+      toast.success('Blog Posted Successfully!');
+      handleAddPostVisibility();
     } catch (err) {
-
+      setIsLoading(false);
     }
   };
 
@@ -50,15 +48,12 @@ const AddPost = ({ handleAddPostVisibility }) => {
     setContent("")
   }
 
-
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
     setThumbnail({ ...thumbnail, fileName: e.target.files[0].name, fileType: e.target.files[0].type });
   }
 
-
   const handleThumbnailUpload = async () => {
-
     setUploading({ status: "Uploading" });
     try {
       if (!file) {
@@ -89,19 +84,19 @@ const AddPost = ({ handleAddPostVisibility }) => {
   }
 
   return (
-    <div className="w-full mx-auto mt-10 bg-white p-6 rounded-lg shadow-lg">
+    <div className={`${isLight ? "bg-white" : "bg-slate-800 text-slate-200"} w-full mx-auto mt-10 p-6 rounded-lg shadow-lg`}>
       <h1 className="text-2xl font-bold mb-6 text-center">Add New Post</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Title Section */}
         <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="title" className={`${isLight ? "bg-white  text-gray-700" : "bg-slate-800 text-slate-200"} block text-sm font-medium`}>
             Title
           </label>
           <input
             id="title"
             {...register("title", { required: "Title is required" })}
             type="text"
-            className="mt-1 block w-full h-10 p-2 rounded-md border-2 border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            className={`${isLight ? "bg-white  text-gray-700" : "bg-slate-800 text-slate-200"} mt-1 block w-full h-10 p-2 rounded-md border-2 border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500`}
             placeholder="Enter title"
           />
           {errors.title && <p className="text-sm text-red-500">{errors.title.message}</p>}
@@ -191,28 +186,34 @@ const AddPost = ({ handleAddPostVisibility }) => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-wrap gap-4">
-          <button
-            type="submit"
-            className="flex-grow py-2 px-4 bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 focus:ring-2"
-          >
-            Submit
-          </button>
-          <button
-            type="reset"
-            className="flex-grow py-2 px-4 bg-gray-600 text-white rounded-md shadow-md hover:bg-gray-700 focus:ring-2"
-            onClick={resetContent}
-          >
-            Reset
-          </button>
-          <button
-            type="button"
-            className="flex-grow py-2 px-4 bg-red-600 text-white rounded-md shadow-md hover:bg-red-700 focus:ring-2"
-            onClick={handleAddPostVisibility}
-          >
-            Cancel
-          </button>
-        </div>
+        {
+          !isLoading ? (
+            <div className="flex flex-wrap gap-4">
+              <button
+                type="submit"
+                className="flex-grow py-2 px-4 bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 focus:ring-2"
+              >
+                Submit
+              </button>
+              <button
+                type="reset"
+                className="flex-grow py-2 px-4 bg-gray-600 text-white rounded-md shadow-md hover:bg-gray-700 focus:ring-2"
+                onClick={resetContent}
+              >
+                Reset
+              </button>
+              <button
+                type="button"
+                className="flex-grow py-2 px-4 bg-red-600 text-white rounded-md shadow-md hover:bg-red-700 focus:ring-2"
+                onClick={handleAddPostVisibility}
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <Loader />
+          )
+        }
       </form>
     </div>
   );

@@ -29,8 +29,8 @@ function App() {
   const dispatch = useDispatch();
   const { isLight } = useSelector((state) => state.theme);
   useEffect(() => {
-    dispatch(fetchPosts());
     dispatch(loadTheme());
+    dispatch(fetchPosts());
   }, [dispatch]);
 
   useEffect(() => {

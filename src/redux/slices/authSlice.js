@@ -22,7 +22,6 @@ const authSlice = createSlice({
         loginFailure : (state, action) => {
             state.isAuthenticated = false;
             state.error = action.payload;
-            console.log(action.payload);
         },
         logoutSuccess : (state, action) =>{
             state.isAuthenticated = false;

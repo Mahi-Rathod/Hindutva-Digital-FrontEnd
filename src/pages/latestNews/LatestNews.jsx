@@ -7,12 +7,12 @@ function LatestNews() {
   const isNestedRoute = location.pathname.includes('/post/');
   const [page, setPage] = useState(1);
   return (
-    <div className='flex w-[95%] m-auto justify-start gap-[3rem] items-start p-[2rem] relative'>
+    <div className='flex w-full m-auto justify-start gap-[3rem] items-start p-[2rem] relative'>
       <section className='md:w-[67%] w-full '>
         {!isNestedRoute && <SideSection category="Latest-News" setPage={setPage} page={page} />}
         <Outlet />
       </section>
-      <div className='fixed w-[30%] right-4'>
+      <div className="sticky w-[30%] hidden sm:block">
         <NewUpdate />
       </div>
     </div>

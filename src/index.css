@@ -5,6 +5,11 @@
 body {
   overflow-x: hidden;
   scrollbar-gutter: stable both-edges;
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+  flex-direction: column;
+  justify-items: center;
 }
 
 /* In your global stylesheet or a dedicated component stylesheet */

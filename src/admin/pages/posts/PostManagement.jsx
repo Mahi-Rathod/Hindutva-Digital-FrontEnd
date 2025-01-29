@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AddPost from "./AddPost.jsx"
 import { useSelector } from "react-redux";
+import SearchBar from "../../../component/utils/SearchBar/SearchBar.jsx";
 
 const PostManagement = () => {
   const [addPostWindowVis, setAddPostWindowVis] = useState(false);
@@ -14,12 +15,10 @@ const PostManagement = () => {
 
   return (
     <div className={`${isLight ? "bg-white" : "bg-slate-800 text-slate-200"} shadow-md p-4 mt-4 min-h-[90vh] w-full`}>
-      <div className="flex justify-between mb-4">
-        <input
-          type="text"
-          placeholder="Search by title or author"
-          className="border p-2 rounded w-1/3"
-        />
+      <div className="flex flex-row-reverse justify-between mb-4">
+        <div className="w-1/2 flex justify-end">
+          <SearchBar isLight={isLight} />
+        </div>
         <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={handleAddPostVisibility}>New Post</button>
       </div>
       <div className="overflow-x-auto">
@@ -49,8 +48,8 @@ const PostManagement = () => {
                 <td className="border p-2">{post.category}</td>
                 <td
                   className={`border p-2 ${post.status === "Published"
-                      ? "text-green-500"
-                      : "text-yellow-500"
+                    ? "text-green-500"
+                    : "text-yellow-500"
                     }`}
                 >
                   {post.status}
@@ -68,8 +67,8 @@ const PostManagement = () => {
 
       {
         addPostWindowVis &&
-        <div className="w-full md:w-[80%] absolute z-10 top-10">
-          <AddPost handleAddPostVisibility={handleAddPostVisibility} setAddPostWindowVis={setAddPostWindowVis} />
+        <div className={`${isLight ? "bg-white" : "bg-slate-800 text-slate-200"}w-full md:w-[80%] absolute z-10 top-10`}>
+          <AddPost handleAddPostVisibility={handleAddPostVisibility} isLight={isLight} setAddPostWindowVis={setAddPostWindowVis} />
         </div>
       }
 

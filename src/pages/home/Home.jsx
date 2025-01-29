@@ -14,7 +14,7 @@ import SchemeSliders from './SchemeSliders';
 import useGsap from '../../component/utils/hook/useGsap.jsx';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Loader from '../../component/loader/Loader.jsx';
+import WifiLoader from '../../component/utils/wifiLoader/WifiLoader.jsx';
 import { useSelector } from 'react-redux';
 import TextAnimation from '../../component/utils/TextAnimation/TextAnimation.jsx';
 
@@ -24,7 +24,7 @@ function Home() {
     const timeline = gsap.timeline({});
     const { isLight } = useSelector((state) => state.theme);
 
-    const { status, trendingPosts } = useSelector((state) => state.post);
+    const { status, trendingPosts, newPost } = useSelector((state) => state.post);
 
     const sectionsRef = useRef([]);
 
@@ -143,68 +143,91 @@ function Home() {
             </section>
 
             {
-                status === 'loading' && <Loader />
+                status === 'loading' ? (
+                    <div className="w-full flex justify-center items-center px-4 py-2 mt-[3rem]">
+                        <WifiLoader />
+                    </div>) : (
+                    <>
+                        <section
+                            id='sarkari-yojna'
+                            className={`md:mt-[13%] mt-[7%] pb-10 border-t-[1px] py-10 flex flex-col gap-2 md:gap-6 justify-evenly w-[90%] m-auto  ${isLight ? "text-slate-800" : "text-slate-200"}`}
+                            ref={(el) => (sectionsRef.current[1] = el)}
+                        >
+                            <div className='flex  items-center'>
+                                <span className='text-2xl md:text-3xl font-extrabold'>
+                                    Trending News
+                                </span>
+                                <IoTrendingUpOutline />
+                            </div>
+                            <div className='w-[100%] md:w-[90%] m-auto p-4'>
+                                <SchemeSliders link="/government-schemes" posts={newPost} />
+                            </div>
+                        </section>
+
+
+                        <section
+                            id='sarkari-yojna'
+                            className={`md:mt-[0] mt-[7%] pb-10 border-t-[1px] py-10 flex flex-col gap-2 md:gap-6 justify-evenly w-[90%] m-auto  ${isLight ? "text-slate-800" : "text-slate-200"}`}
+                            ref={(el) => (sectionsRef.current[1] = el)}
+                        >
+                            <div className='flex  items-center'>
+                                <span className='text-2xl md:text-3xl font-extrabold'>
+                                    सरकारी योजना
+                                </span>
+                                <IoTrendingUpOutline />
+                            </div>
+                            <div className='w-[100%] md:w-[90%] m-auto p-4'>
+                                <SchemeSliders link="/government-schemes" posts={trendingPosts["Government-Schemes"]} />
+                            </div>
+                            <div className='md:px-[2rem] py-1'>
+                                <Button btnText='More Post' btnLink="/government-schemes" classNames='hover:bg-slate-700' bgColor={isLight ? 'bg-slate-900' : 'bg-slate-500'} />
+                            </div>
+                        </section>
+
+                        {
+                            trendingPosts["Job-Bharati"]?.length > 2 &&
+                            <section
+                                className={`py-10 flex flex-col gap-6 border-t-[1px] justify-center w-[90%] m-auto text-slate-200 ${isLight ? "text-slate-800" : "text-slate-200"}`}
+                                ref={(el) => (sectionsRef.current[2] = el)}>
+                                <div className='flex  items-center'>
+                                    <span className='flex items-center px-[2rem] gap-3 text-xl'>
+                                        <span className='text-3xl font-extrabold' >जॉब / सरकारी भरती</span> <IoTrendingUpOutline />
+                                    </span>
+                                </div>
+                                <div className='w-[100%] md:w-[90%] m-auto p-4'>
+                                    <SchemeSliders link="/job-and-bharati" posts={trendingPosts["Job-Bharati"]} />
+                                </div>
+                                <div className='px-[2rem]'>
+                                    <Button btnText='More Post' btnLink="/job-and-bharati" classNames='hover:bg-slate-700' bgColor={isLight ? 'bg-slate-900' : 'bg-slate-500'} />
+                                </div>
+                            </section>
+                        }
+
+
+                        {
+                            trendingPosts["GR"]?.length > 2 &&
+                            <section
+                                className={`py-10 flex flex-col gap-6 border-t-[1px] justify-center w-[90%] m-auto text-slate-200 ${isLight ? "text-slate-800" : "text-slate-200"}`}
+                                ref={(el) => (sectionsRef.current[3] = el)}
+                            >
+                                <div className='flex  items-center'>
+                                    <span className='flex items-center px-[2rem] gap-3 text-xl'>
+                                        <span className='text-3xl font-extrabold'>शासन निर्णय (GR)</span> <IoTrendingUpOutline />
+                                    </span>
+                                </div>
+                                <div className='w-[100%] md:w-[90%] m-auto p-4'>
+                                    <SchemeSliders link="/government-gr" posts={trendingPosts["GR"]} />
+                                </div>
+                                <div className='px-[2rem]'>
+                                    <Button btnText='More Post' btnLink="/government-gr" classNames='hover:bg-slate-700' bgColor={isLight ? 'bg-slate-900' : 'bg-slate-500'} />
+                                </div>
+                            </section>
+                        }
+                    </>
+                )
             }
 
 
-            <section
-                id='sarkari-yojna'
-                className={`md:mt-[13%] mt-[7%] pb-10 border-t-[1px] py-10 flex flex-col gap-2 md:gap-6 justify-evenly w-[90%] m-auto  ${isLight ? "text-slate-800":"text-slate-200"}`}
-                ref={(el) => (sectionsRef.current[1] = el)}
-            >
-                <div className='flex  items-center'>
-                    <span className='text-2xl md:text-3xl font-extrabold'>
-                        सरकारी योजना
-                    </span>
-                    <IoTrendingUpOutline />
-                </div>
-                <div className='w-[100%] md:w-[90%] m-auto p-4'>
-                    <SchemeSliders link="/government-schemes" posts={trendingPosts["Government-Schemes"]} />
-                </div>
-                <div className='md:px-[2rem] py-1'>
-                    <Button btnText='More Post' btnLink="/government-schemes" classNames='hover:bg-slate-700' bgColor={isLight ? 'bg-slate-900' : 'bg-slate-500'}/>
-                </div>
-            </section>
-
-            {
-                trendingPosts["Job-Bharati"]?.length > 2 &&
-                <section
-                    className={`py-10 flex flex-col gap-6 border-t-[1px] justify-center w-[90%] m-auto text-slate-200 ${isLight ? "text-slate-800":"text-slate-200"}`}
-                    ref={(el) => (sectionsRef.current[2] = el)}>
-                    <div className='flex  items-center'>
-                        <span className='flex items-center px-[2rem] gap-3 text-xl'>
-                            <span className='text-3xl font-extrabold' >जॉब / सरकारी भरती</span> <IoTrendingUpOutline />
-                        </span>
-                    </div>
-                    <div className='w-[100%] md:w-[90%] m-auto p-4'>
-                        <SchemeSliders link="/job-and-bharati" posts={trendingPosts["Job-Bharati"]} />
-                    </div>
-                    <div className='px-[2rem]'>
-                        <Button btnText='More Post' btnLink="/job-and-bharati" classNames='hover:bg-slate-700' bgColor={isLight ? 'bg-slate-900' : 'bg-slate-500'} />
-                    </div>
-                </section>
-            }
-
-
-            {
-                trendingPosts["GR"]?.length > 2 &&
-                <section
-                    className={`py-10 flex flex-col gap-6 border-t-[1px] justify-center w-[90%] m-auto text-slate-200 ${isLight ? "text-slate-800":"text-slate-200"}`}
-                    ref={(el) => (sectionsRef.current[3] = el)}
-                >
-                    <div className='flex  items-center'>
-                        <span className='flex items-center px-[2rem] gap-3 text-xl'>
-                            <span className='text-3xl font-extrabold'>शासन निर्णय (GR)</span> <IoTrendingUpOutline />
-                        </span>
-                    </div>
-                    <div className='w-[100%] md:w-[90%] m-auto p-4'>
-                        <SchemeSliders link="/government-gr" posts={trendingPosts["GR"]} />
-                    </div>
-                    <div className='px-[2rem]'>
-                        <Button btnText='More Post' btnLink="/government-gr" classNames='hover:bg-slate-700' bgColor={isLight ? 'bg-slate-900' : 'bg-slate-500'} />
-                    </div>
-                </section>
-            }
 
         </main >
     )

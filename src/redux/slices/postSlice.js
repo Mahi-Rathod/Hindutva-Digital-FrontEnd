@@ -5,11 +5,12 @@ const initialState = {
   trendingPosts: {
     "Government-Schemes": [],
     "Job-Bharati": [],
-    "Education": [],
-    "Information": [],
-    "GR": [],
+    Education: [],
+    Information: [],
+    GR: [],
     "Latest-News": [],
   },
+  trendingNews : [],
   post: {},
   newPost: [],
   postCategory: {},
@@ -63,25 +64,22 @@ const postSlice = createSlice({
       .addCase(fetchPosts.pending, (state) => {
         state.status = "loading";
       })
+
       .addCase(fetchPosts.fulfilled, (state, action) => {
         const temp = action.payload;
         temp.forEach((post) => {
           if (!state.trendingPosts[post.category]) {
             state.trendingPosts[post.category] = [post];
-          } else {
-            if (
-              !state.trendingPosts[post.category].some(
-                (existingPost) => existingPost.id === post.id
-              )
-            ) {
-              state.trendingPosts[post.category].push(post);
-            }
+          }
+          else if (!state.trendingPosts[post.category].some((existingPost) => existingPost.id === post.id)) {
+            state.trendingPosts[post.category].push(post);
           }
         });
         state.newPost = action.payload.slice(0, 10);
         state.status = "completed";
         state.error = null;
       })
+      
       .addCase(fetchPosts.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
