@@ -5,6 +5,7 @@ import { FiMenu } from "react-icons/fi";
 import { GiCrossedSwords } from "react-icons/gi";
 import Footer from "../footer/Footer.jsx"
 import { useSelector } from 'react-redux';
+import SearchBar from '../utils/SearchBar/SearchBar.jsx';
 function Menu({ isVisible, toggleMenu }) {
     const { isLight } = useSelector((state) => state.theme);
     const renderNavLink = (to, label) => {
@@ -23,6 +24,7 @@ function Menu({ isVisible, toggleMenu }) {
     return (
         <section className='w-[60%] h-full'>
             <div className='flex justify-end items-center h-11 md:hidden gap-5'>
+                <SearchBar isLight={isLight} />
                 <ThemeChange />
                 {
                     !isVisible ? (

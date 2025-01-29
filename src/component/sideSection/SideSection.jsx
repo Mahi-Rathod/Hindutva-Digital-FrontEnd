@@ -36,7 +36,8 @@ function SideSection({ category, setPage, page }) {
     const totalPosts = postCategory[category]?.totalPosts || 0;
     const allPostsLoaded = posts.length >= totalPosts;
 
-    console.log(totalPosts);
+    const { isLight } = useSelector(state => state.theme);
+
     useEffect(() => {
         const existingPages = postCategory[category]?.pages || [];
         if (!existingPages.includes(page)) {
@@ -51,14 +52,22 @@ function SideSection({ category, setPage, page }) {
     return (
         <>
             {
-                posts?.length > 0 &&
-                <div className='w-full m-auto flex flex-wrap justify-start items-start gap-[3rem] min-h-[90vh]'>
-                    {
-                        posts?.length > 0 && posts?.map((post) => (
-                            <NewsCard key={post.id} img={post.thumbnail} type={post.type} title={post.title} date={post.updatedAt} link={`${link}/${post.id}`} />
-                        ))
-                    }
-                </div>
+                posts?.length > 0 && (
+                    <div className="w-full m-auto grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-[1rem] p-2">
+                        {posts?.map((post) => (
+                            <NewsCard
+                                key={post.id}
+                                img={post.thumbnail}
+                                type={post.type}
+                                title={post.title}
+                                date={post.updatedAt}
+                                link={`${link}/${post.id}`}
+                                isLight={isLight}
+                                heights = 'h-[15rem] md:h-[26rem]'
+                            />
+                        ))}
+                    </div>
+                )
             }
             {!allPostsLoaded && (
                 <Button

@@ -7,22 +7,12 @@ import Footer from "../component/footer/Footer";
 import Sidebar from "../admin/sidebar/Sidebar";
 
 function Layout() {
-  // const [isNavbarLoaded, setIsNavbarLoaded] = useState(false);
-
   const isAdmin = useSelector((state) => state.auth.isAdmin);
-
-  // const handleNavbarAnimationComplete = () => {
-  //   setIsNavbarLoaded(true); // Set to true after Navbar animation finishes
-  // };
-
   return (
     <>
-      {/* Navbar with animation handler */}
       <Navbar/>
 
-      {/* Render content only after Navbar is fully loaded */}
         <div className={`${isAdmin ? "flex" : ""}`}>
-          {/* Admin-specific Sidebar */}
           {isAdmin && <Sidebar />}
 
           {/* Main Content Area */}

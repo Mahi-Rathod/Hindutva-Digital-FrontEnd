@@ -7,7 +7,6 @@ import { toggleTheme } from '../../../redux/slices/themeSlice';
 function ThemeChange() {
     const dispatch = useDispatch();
     const { isLight } = useSelector((state)=>state.theme);
-    console.log(isLight);
 
     const handleThemeChangeClick = () =>{
         dispatch(toggleTheme());

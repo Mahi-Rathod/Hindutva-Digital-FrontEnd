@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import logo from "../../assets/logo.jpeg";
 import { NavLink } from 'react-router-dom';
 import Menu from './Menu';
@@ -47,15 +47,15 @@ function Navbar() {
         >
             <div className="h-11 flex flex-row gap-[4rem] items-center cursor-pointer w-[40%]">
                 <div className="flex flex-row gap-2 items-center cursor-pointer">
-                    <img
+                    {/* <img
                         src={logo}
                         alt="Logo"
                         className="h-10 shadow-sm shadow-red-400 p-1 rounded-sm"
-                    />
+                    /> */}
                     <div className="p-1">
                         <h2 className="text-[1.4rem] font-extrabold"> हिंदुत्व </h2>
-                        <h3 className="text-orange-500 text-[0.8rem] font-semibold font-mono">
-                            डिजिटल सेवा
+                        <h3 className="text-orange-500 text-[0.8rem] font-extrabold font-serif">
+                            Digital's
                         </h3>
                     </div>
                 </div>
@@ -103,7 +103,7 @@ function Navbar() {
                             <div className='px-5'>
                                 <ThemeChange />
                             </div>
-                            <SearchBar />
+                            <SearchBar isLight={isLight} />
                         </div>
                     </>
                 ) :

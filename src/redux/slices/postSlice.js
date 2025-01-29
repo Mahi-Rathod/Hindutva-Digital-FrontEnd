@@ -27,7 +27,7 @@ export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
 
 export const fetchByCategory = createAsyncThunk(
   "posts/fetchByCategory",
-  async ({ category = "", page = 1, limit = 2 }) => {
+  async ({ category = "", page = 1, limit = 6 }) => {
     const response = await axios.get(
       `${
         import.meta.env.VITE_API_BASE_URL

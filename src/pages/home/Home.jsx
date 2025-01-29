@@ -98,7 +98,7 @@ function Home() {
                         {
                             buttonText: "Follow",
                             img: Instagram,
-                            text: '60 हजाराहून जास्त फॉलोवर्स, इंस्टाग्राम वर रोज तुम्हाला सरकारी अपडेट्स मिळतील',
+                            text: 'इंस्टाग्राम वर रोज तुम्हाला सरकारी अपडेट्स मिळतील',
                             link: 'https://www.instagram.com/_._swastikevents_._/',
                             icon: <FaInstagram />,
                         },
@@ -119,7 +119,7 @@ function Home() {
                         {
                             buttonText: "Subscribe",
                             img: Youtube,
-                            text: '9 लाखांहून जास्त सबस्क्राईबर, YouTube वर 10,28,73,101 पेक्षा जास्त व्ह्यूज आहेत.',
+                            text: 'सर्व नवीन व्हिडिओ पाहण्यासाठी आमच्या यूट्यूब चॅनेलला सब्सक्राईब करा!',
                             link: '/',
                             icon: <LuYoutube />,
                         },
