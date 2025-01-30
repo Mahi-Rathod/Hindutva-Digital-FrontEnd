@@ -1,8 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactQuill from "react-quill";
 
 const RichTextEditor = ({ modalData, setModalData }) => {
   const [formData, setFormData] = useState(modalData.post);
+
+  // Function to trigger external script loading for embeds
+  const loadSocialMediaScripts = () => {
+    // Load Twitter widget script
+    const loadTwitterScript = () => {
+      const script = document.createElement("script");
+      script.src = "https://platform.twitter.com/widgets.js";
+      script.async = true;
+      document.body.appendChild(script);
+    };
+
+    // Load Instagram embed script
+    const loadInstagramScript = () => {
+      const script = document.createElement("script");
+      script.src = "https://www.instagram.com/embed.js";
+      script.async = true;
+      document.body.appendChild(script);
+    };
+
+    // Load Facebook embed script
+    const loadFacebookScript = () => {
+      const script = document.createElement("script");
+      script.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v12.0";
+      script.async = true;
+      document.body.appendChild(script);
+    };
+
+    // Load YouTube embed script
+    const loadYouTubeScript = () => {
+      const script = document.createElement("script");
+      script.src = "https://www.youtube.com/iframe_api";
+      script.async = true;
+      document.body.appendChild(script);
+    };
+
+    // Load all scripts
+    loadTwitterScript();
+    loadInstagramScript();
+    loadFacebookScript();
+    loadYouTubeScript();
+
+    // Cleanup scripts when the component is unmounted or updated
+    return () => {
+      document.body.querySelectorAll("script[src]").forEach((script) => {
+        document.body.removeChild(script);
+      });
+    };
+  };
+
+  useEffect(() => {
+    loadSocialMediaScripts(); // Load all social media scripts when content changes
+  }, [formData.content]);
 
   const handleChange = (value) => {
     setFormData({ ...formData, content: value });
