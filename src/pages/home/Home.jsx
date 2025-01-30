@@ -99,7 +99,7 @@ function Home() {
                             buttonText: "Follow",
                             img: Instagram,
                             text: 'इंस्टाग्राम वर रोज तुम्हाला सरकारी अपडेट्स मिळतील',
-                            link: 'https://www.instagram.com/_._swastikevents_._/',
+                            link: 'https://www.instagram.com/___._mahi_.___/',
                             icon: <FaInstagram />,
                         },
                         {
