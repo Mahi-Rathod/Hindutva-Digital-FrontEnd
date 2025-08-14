@@ -1,0 +1,103 @@
+/* Editor Light Theme */
+.jodit-container-light .jodit-workplace {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+.jodit-container-light .jodit-toolbar {
+  background-color: #f0f0f0;
+  border-color: #e0e0e0;
+}
+
+.jodit-container-light .jodit-toolbar-button {
+  color: #555;
+}
+
+.jodit-container-light .jodit-toolbar-button:hover {
+  background-color: #e6e6e6;
+}
+
+/* Editor Dark Theme */
+.jodit-container-dark .jodit-workplace {
+  background-color: #1e293b;
+  color: #e2e8f0;
+}
+
+.jodit-container-dark .jodit-toolbar {
+  background-color: #1a202c;
+  border-color: #4a5568;
+}
+
+.jodit-container-dark .jodit-toolbar-button {
+  color: #e2e8f0;
+}
+
+.jodit-container-dark .jodit-toolbar-button:hover {
+  background-color: #4a5568;
+}
+
+.jodit-container-dark .jodit-toolbar-button__icon {
+  fill: #e2e8f0;
+}
+
+/* Enhanced dark theme styles */
+.jodit-container-dark .jodit-wysiwyg {
+  background-color: #1e293b;
+  color: #e2e8f0;
+}
+
+.jodit-container-dark .jodit-wysiwyg a {
+  color: #60a5fa;
+}
+
+.jodit-container-dark .jodit-wysiwyg table,
+.jodit-container-dark .jodit-wysiwyg th,
+.jodit-container-dark .jodit-wysiwyg td {
+  border-color: #475569;
+}
+
+.jodit-container-dark .jodit-popup {
+  background-color: #1e293b;
+  border-color: #475569;
+  color: #e2e8f0;
+}
+
+.jodit-container-dark .jodit-ui-input {
+  background-color: #2d3748;
+  color: #e2e8f0;
+  border-color: #4a5568;
+}
+
+/* Common Editor Improvements */
+.jodit-container {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.jodit-container:focus-within {
+  box-shadow: 0 1px 8px rgba(59, 130, 246, 0.5);
+}
+
+.jodit-toolbar {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.jodit-status-bar {
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+/* Animation */
+.jodit-container:hover {
+  transform: translateY(-1px);
+}
+
+/* Responsive toolbar */
+@media (max-width: 768px) {
+  .jodit-toolbar__box {
+    flex-wrap: wrap;
+  }
+}

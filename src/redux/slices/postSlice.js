@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import axiosInstance from "../../component/utils/axiosInstance/AxiosInstance.jsx";
 
 const initialState = {
   trendingPosts: {
@@ -10,7 +11,7 @@ const initialState = {
     GR: [],
     "Latest-News": [],
   },
-  trendingNews : [],
+  trendingNews: [],
   post: {},
   newPost: [],
   postCategory: {},
@@ -55,6 +56,22 @@ export const viewPost = createAsyncThunk("/posts/viewPosts", async (id) => {
   return response.data.post;
 });
 
+export const updatePost = createAsyncThunk(
+  "/posts/updatePost",
+  async ({ id, postData }) => {
+    const response = await axiosInstance.put(
+      `/admin/edit-post/${id}`,
+      postData
+    );
+    return response.data;
+  }
+);
+
+export const deletePost = createAsyncThunk("/posts/deletePost", async (id) => {
+  const response = await axiosInstance.delete(`/posts/delete-post/${id}`);
+  return { id, ...response.data };
+});
+
 const postSlice = createSlice({
   name: "posts",
   initialState,
@@ -70,8 +87,11 @@ const postSlice = createSlice({
         temp.forEach((post) => {
           if (!state.trendingPosts[post.category]) {
             state.trendingPosts[post.category] = [post];
-          }
-          else if (!state.trendingPosts[post.category].some((existingPost) => existingPost.id === post.id)) {
+          } else if (
+            !state.trendingPosts[post.category].some(
+              (existingPost) => existingPost.id === post.id
+            )
+          ) {
             state.trendingPosts[post.category].push(post);
           }
         });
@@ -79,7 +99,7 @@ const postSlice = createSlice({
         state.status = "completed";
         state.error = null;
       })
-      
+
       .addCase(fetchPosts.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
@@ -135,10 +155,52 @@ const postSlice = createSlice({
       .addCase(fetchByCategory.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      // Update post
+      .addCase(updatePost.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updatePost.fulfilled, (state) => {
+        state.status = "completed";
+        state.error = null;
+      })
+      .addCase(updatePost.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      // Delete post
+      .addCase(deletePost.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deletePost.fulfilled, (state, action) => {
+        state.status = "completed";
+        // Remove the deleted post from trending posts categories
+        Object.keys(state.trendingPosts).forEach((category) => {
+          state.trendingPosts[category] = state.trendingPosts[category].filter(
+            (post) => post.id !== action.payload.id
+          );
+        });
+        // Remove from newPost array
+        state.newPost = state.newPost.filter(
+          (post) => post.id !== action.payload.id
+        );
+        // Remove from categories
+        Object.keys(state.postCategory).forEach((category) => {
+          if (state.postCategory[category]?.posts) {
+            state.postCategory[category].posts = state.postCategory[
+              category
+            ].posts.filter((post) => post.id !== action.payload.id);
+          }
+        });
+        state.error = null;
+      })
+      .addCase(deletePost.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
   },
 });
 
-export const {} = postSlice.actions;
+export const actions = postSlice.actions;
 
 export default postSlice.reducer;
