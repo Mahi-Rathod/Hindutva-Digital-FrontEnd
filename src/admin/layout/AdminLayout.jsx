@@ -1,8 +1,14 @@
+import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import Navbar from "../../component/navbar/Navbar.jsx";
+import ButtonLoader from "../../component/utils/wifiLoader/ButtonLoader.jsx";
 import Sidebar from "../sidebar/Sidebar.jsx";
 
 const AdminLayout = () => {
+  const { loading } = useSelector((state) => state.auth);
+
+  if (loading) return <ButtonLoader />;
+
   return (
     <div>
       <Navbar />
