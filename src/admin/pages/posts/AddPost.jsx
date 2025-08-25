@@ -353,7 +353,7 @@ const AddPost = ({ handleAddPostVisibility, isLight, postData }) => {
                 },
                 placeholder: "Start writing your post content...",
                 buttons:
-                  "bold,italic,underline,strikethrough,eraser,|,ul,ol,|,outdent,indent,|,font,fontsize,brush,paragraph,|,image,table,link,|,align,undo,redo,\n,selectall,cut,copy,paste,|,hr,symbol,fullsize,print,preview,find",
+                  "bold,italic,underline,strikethrough,eraser,|,ul,ol,|,outdent,indent,|,font,fontsize,brush,paragraph,|,image,table,link,|,align,undo,redo,\n,selectall,cut,copy,paste,|,hr,symbol,fullsize,print,preview,find, source",
                 showPlaceholder: true,
                 theme: isLight ? "light" : "dark",
                 statusbar: false,
